@@ -26,7 +26,7 @@ Facilitate the installation process for artificial intelligence tools and enable
 6. [LMStudio](https://github.com/lmstudio-ai/.github)
 7. [LocalGPT](https://github.com/PromtEngineer/localGPT)
 8. [Ollama](https://github.com/jmorganca/ollama)
-9. [OllamaGUI](lien_vers_la_documentation)
+9. [OllamaUI](https://github.com/ollama-ui/ollama-ui)
 10. [ChatD](lien_vers_la_documentation)
 
 ... Documentation under construction, script maintained and functional. ...
