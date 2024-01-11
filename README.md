@@ -12,7 +12,7 @@ Facilitate the installation process for artificial intelligence tools and enable
 
 ## Benefits
 
-- Time-saving: Quickly install multiple tools in a single run.
+- Time-saving: quickly install multiple tools in a single run.
 - Centralization: group different AI tools on a single server.
 
 ## List of IA Tools installed by the script
