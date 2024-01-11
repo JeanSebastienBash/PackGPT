@@ -16,17 +16,17 @@ Facilitate the installation process for artificial intelligence tools and enable
 - Time-saving: quickly install multiple tools in a single run.
 - Centralization: group different AI tools on a single server.
 
-## List of IA Tools installed by the script
+## List of IA Tools installed by the script, sorted alphabetically
 
-1. <a href="https://github.com/pinokiocomputer/pinokio" target="_blank">Pinokio</a>
-2. <a href="https://github.com/Woolverine94/biniou" target="_blank">Biniou</a>
+1. [Biniou](https://github.com/Woolverine94/biniou)
+2. [ChatD](https://github.com/BruceMacD/chatd)
 3. [Final2x](https://github.com/Tohrusky/Final2x)
 4. [Fooocus](https://github.com/lllyasviel/Fooocus)
 5. [GPT4All](https://github.com/nomic-ai/gpt4all)
-6. [LMStudio](https://github.com/lmstudio-ai/.github)
+6. [LM Studio AI](https://github.com/lmstudio-ai/.github)
 7. [LocalGPT](https://github.com/PromtEngineer/localGPT)
 8. [Ollama](https://github.com/jmorganca/ollama)
-9. [OllamaUI](https://github.com/ollama-ui/ollama-ui)
-10. [ChatD](https://github.com/BruceMacD/chatd)
+9. [Ollama UI](https://github.com/ollama-ui/ollama-ui)
+10. <a href="https://github.com/pinokiocomputer/pinokio" target="_blank">Pinokio</a>
 
 ... Documentation under construction, script maintained and functional. ...
