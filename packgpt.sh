@@ -1,64 +1,75 @@
 #!/bin/bash
-
-passdebian='DebianUserPasswordHere'
-
+myname=$(whoami)
+mypass='myPassword1234'
+execute_as_root() {
+    echo "$rootpass" | sudo -S -i "$@"
+}
 execute_as_sudo() {
-    echo "$passdebian" | sudo -S $@
+    echo "$mypass" | sudo -S "$@"
 }
-
-install_system_packages() {
-    execute_as_sudo apt update
+system_update() {
+    execute_as_sudo apt update -y
+}
+system_upgrade() {
     execute_as_sudo apt upgrade -y
-    execute_as_sudo apt install -y curl git wget python3 python3-venv python3-pip links2 gcc perl make ffmpeg openssl locate htop tree lxde-core xorg xserver-xorg libgtk-3-0 libnotify4 libxtst6 xdg-utils libatspi2.0-0 libsecret-1-0 libnss3 libxss1 libasound2 libpulse0 libportaudio2 chromium snapd unzip bzip2 libncurses5-dev libffi-dev libreadline-dev libssl-dev libbz2-dev libsqlite3-dev tk-dev liblzma-dev libgoogle-perftools-dev google-perftools
 }
-
-install_pyenv() {
-    local pyenvRoot="$HOME/.pyenv"
-    if [ -d "$pyenvRoot" ]; then
-        rm -rf "$pyenvRoot"
-    fi
-    curl https://pyenv.run | bash
-    export PYENV_ROOT="$pyenvRoot"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+install_nvidia() {
+    execute_as_sudo apt update -y
+    execute_as_sudo apt upgrade -y
+    execute_as_sudo sed -i \
+        -e 's#deb http://deb.debian.org/debian/ bookworm main#deb http://deb.debian.org/debian/ bookworm main non-free contrib#' \
+        -e 's#deb-src http://deb.debian.org/debian/ bookworm main#deb-src http://deb.debian.org/debian/ bookworm main non-free contrib#' \
+        -e 's#deb http://security.debian.org/debian-security bookworm-security main#deb http://security.debian.org/debian-security bookworm-security main non-free contrib#' \
+        -e 's#deb-src http://security.debian.org/debian-security bookworm-security main#deb-src http://security.debian.org/debian-security bookworm-security main non-free contrib#' \
+        -e 's#deb http://deb.debian.org/debian/ bookworm-updates main#deb http://deb.debian.org/debian/ bookworm-updates main non-free contrib#' \
+        -e 's#deb-src http://deb.debian.org/debian/ bookworm-updates main#deb-src http://deb.debian.org/debian/ bookworm-updates main non-free contrib#' \
+        /etc/apt/sources.list
+    execute_as_sudo apt update -y
+    execute_as_sudo apt install -y nvidia-detect
+    execute_as_sudo nvidia-detect
+    execute_as_sudo apt install -y nvidia-driver
+    # execute_as_sudo systemctl reboot
+    # Si probleme pendant installation nvidia, redémarrer votre serveur et éxecutez sudo dpkg --configure -a, puis relancer packgpt et install_nvidia, puis reboot du serveur.
 }
-
+install_packgpt() {
+    execute_as_sudo apt install -y git tree htop nvtop locate chromium libtcmalloc-minimal4
+    cd /home/$myname/ || exit
+    git clone https://github.com/JeanSebastienBash/PackGPT.git
+}
+install_pinokio() {
+    # START : shell-1 : pinokio
+    local pathPinokio="$HOME/PackGPT/pinokio"
+    mkdir -p $pathPinokio
+    wget -P $pathPinokio "https://github.com/pinokiocomputer/pinokio/releases/download/1.0.16/Pinokio_1.0.16_amd64.deb"
+    execute_as_sudo dpkg -i $pathPinokio/$(basename "https://github.com/pinokiocomputer/pinokio/releases/download/1.0.16/Pinokio_1.0.16_amd64.deb")
+    execute_as_sudo apt-get install -y -f
+    execute_as_sudo apt --fix-broken -y install
+    execute_as_sudo apt install --reinstall -y libasound2
+}
 install_biniou() {
-    local pathBiniou="$HOME/packgpt/biniou"
+    # START : shell-1 : cd biniou ; ./webgui.sh
+    # START : shell-2 : chromium https://0.0.0.0:7860
+    local pathBiniou="$HOME/PackGPT/biniou"
     mkdir -p $pathBiniou
+    execute_as_sudo apt install -y python3.11-venv build-essential python3-dev
     git clone https://github.com/Woolverine94/biniou.git $pathBiniou
     pushd $pathBiniou
     bash install.sh
     popd
 }
-
-install_pinokio() {
-    local pathPinokio="$HOME/packgpt/pinokio"
-    local pinokioDebURL="https://github.com/pinokiocomputer/pinokio/releases/download/0.2.16/Pinokio_0.2.16_amd64.deb"
-    mkdir -p $pathPinokio
-    wget -P $pathPinokio $pinokioDebURL
-    execute_as_sudo dpkg -i $pathPinokio/$(basename $pinokioDebURL)
-}
-
-install_buzz() {
-    local pathBuzz="$HOME/packgpt/buzz"
-    mkdir -p $pathBuzz
-    execute_as_sudo apt-get install -y libportaudio2
-    execute_as_sudo snap install buzz --classic
-}
-
 install_final2x() {
-    local pathFinal2x="$HOME/packgpt/final2x"
+    # START : shell-1 : final2x
+    local pathFinal2x="$HOME/PackGPT/final2x"
+    chmod 777 -Rv $pathFinal2x
     local final2xDebURL="https://github.com/Tohrusky/Final2x/releases/download/2024-01-02/Final2x-linux-pip-x64-deb.deb"
     mkdir -p $pathFinal2x
     wget -P $pathFinal2x $final2xDebURL
     execute_as_sudo dpkg -i $pathFinal2x/$(basename $final2xDebURL)
-    execute_as_sudo apt --fix-broken install -y
 }
-
 install_fooocus() {
-    local pathFooocus="$HOME/packgpt/fooocus"
+    # START : shell-1 : cd foocus ; source fooocus_env/bin/activate ; python entry_with_update.py
+    # START : shell-2 : chromium http://127.0.0.1:7865/
+    local pathFooocus="$HOME/PackGPT/fooocus"
     mkdir -p $pathFooocus
     git clone https://github.com/lllyasviel/Fooocus.git $pathFooocus
     pushd $pathFooocus
@@ -67,57 +78,69 @@ install_fooocus() {
     pip install -r requirements_versions.txt
     popd
 }
-
 install_gpt4all() {
-    local pathGpt4all="$HOME/packgpt/gpt4all"
+    # START : shell-1 : ./gpt4all/bin/chat
+    local pathGpt4all="$HOME/PackGPT/gpt4all"
     local gpt4allInstallerURL="https://github.com/nomic-ai/gpt4all/releases/download/v2.5.4/gpt4all-installer-linux-v2.5.4.run"
     mkdir -p $pathGpt4all
     wget -P $pathGpt4all $gpt4allInstallerURL
-    execute_as_sudo apt install -y libxcb-icccm4 libxcb-image0
+    execute_as_sudo apt install -y libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-xinerama0 libxcb-xkb1 libxkbcommon-x11-0
     chmod +x $pathGpt4all/gpt4all-installer-linux-v2.5.4.run
-    execute_as_sudo $pathGpt4all/gpt4all-installer-linux-v2.5.4.run
+    $pathGpt4all/gpt4all-installer-linux-v2.5.4.run
 }
-
 install_lmstudio() {
-    local pathLMStudio="$HOME/packgpt/lmstudio"
+    # START : shell-1 : cd lmstudio ; ./LM+Studio-0.2.8-beta-v1.AppImage
+    local pathLMStudio="$HOME/PackGPT/lmstudio"
     local lmStudioURL="https://s3.amazonaws.com/releases.lmstudio.ai/prerelease/LM+Studio-0.2.8-beta-v1.AppImage"
     mkdir -p $pathLMStudio
     wget -P $pathLMStudio $lmStudioURL
+    execute_as_sudo apt install -y fuse
+    # execute_as_sudo apt install -y modprobe fuse # if problem
     chmod +x $pathLMStudio/$(basename $lmStudioURL)
 }
-
-install_localGPT() {
-    local pathLocalGPT="$HOME/packgpt/localGPT"
+install_localgpt() {
+    # START : shell-1 : cd localgpt ; source localgpt_env/bin/activate ; python run_localGPT_API.py
+    # START : shell-2 : cd localgpt ; source localgpt_env/bin/activate ; cd localGPTUI/ ; python localGPTUI.py
+    # START : shell-3 : chromium http://127.0.0.1:5111
+    local pathLocalGPT="$HOME/PackGPT/localgpt"
     mkdir -p $pathLocalGPT
     git clone https://github.com/PromtEngineer/localGPT.git $pathLocalGPT
     pushd $pathLocalGPT
+    execute_as_sudo apt install -y python3-wheel python3-venv python3-pip ninja-build nvidia-cuda-toolkit
     python3 -m venv localgpt_env
     source localgpt_env/bin/activate
     pip install -r requirements.txt
+    export CUDA_HOME=/home/drp/PackGPT/localgpt/localgpt_env/lib/python3.11/site-packages/torch
+    pip install wheel
+    pip install llama-cpp-python
+    pip install --use-pep517 auto-gptq==0.2.2
     popd
 }
-
 install_ollama() {
-    local pathOllama="$HOME/packgpt/ollama"
+    # START : shell-1 : ollama
+    local pathOllama="$HOME/PackGPT/ollama"
     mkdir -p $pathOllama
+    execute_as_sudo apt install -y curl
     pushd $pathOllama
     execute_as_sudo curl https://ollama.ai/install.sh | sh
     popd
 }
-
 install_ollamagui() {
-    local pathOllamaGui="$HOME/packgpt/ollamagui"
+    # START : shell-1 : cd ollamagui ; python3 -m http.server --bind 127.0.0.1
+    # START : shell-2 : chromium http://127.0.0.1:8000/
+    local pathOllamaGui="$HOME/PackGPT/ollamagui"
     mkdir -p $pathOllamaGui
     pushd $pathOllamaGui
     git clone https://github.com/ollama-ui/ollama-ui .
     execute_as_sudo make
     popd
 }
-
 install_chatd() {
-    local pathChatd="$HOME/packgpt/chatd"
+    # START : shell-1 : cd chatd/chatd-linux-x64 ; ./chatd
+    local pathChatd="$HOME/PackGPT/chatd"
     local chatdZipURL="https://github.com/BruceMacD/chatd/releases/download/v1.0.1/chatd-linux-x64.zip"
     mkdir -p $pathChatd
+    execute_as_sudo apt install -y unzip
     wget -P $pathChatd $chatdZipURL
     pushd $pathChatd
     unzip $(basename $chatdZipURL)
@@ -125,116 +148,19 @@ install_chatd() {
     popd
 }
 
-install_privategpt() {
-    local pathPrivateGPT="$HOME/packgpt/privategpt"
-    export PATH="$HOME/.pyenv/bin:$PATH"
-    mkdir -p $pathPrivateGPT
-    git clone https://github.com/imartinez/privateGPT $pathPrivateGPT
-    pushd $pathPrivateGPT
-    execute_as_sudo apt install -y make gcc
-    pyenv install 3.11
-    pyenv local 3.11
-    curl -sSL https://install.python-poetry.org | python3 -
-    export PATH="$HOME/.local/bin:$PATH"
-    poetry install --with ui
-    poetry install --with local
-    poetry run python scripts/setup
-    popd
-}
+system_update
+system_upgrade
 
-install_replay() {
-    local pathReplay="$HOME/packgpt/replay"
-    local replayDebURL="https://www.tryreplay.io/download?platform=linux"
-    mkdir -p $pathReplay
-    wget -P $pathReplay $replayDebURL
-    execute_as_sudo dpkg -i $pathReplay/$(basename $replayDebURL)
-}
+#install_nvidia
 
-install_rvcgui() {
-    local pathRvcgui="$HOME/packgpt/rvcgui"
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-    mkdir -p $pathRvcgui
-    git clone https://github.com/Tiger14n/RVC-GUI.git $pathRvcgui || { echo "Cloning failed"; exit 1; }
-    pushd $pathRvcgui
-    pyenv install 3.10.6
-    pyenv local 3.10.6
-    python3 -m venv rvcgui_env
-    source rvcgui_env/bin/activate
-    pip install -U pip setuptools wheel
-    pip install -U torch torchaudio
-    pip install -r requirements.txt
-    wget -P $pathRvcgui https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/hubert_base.pt
-    popd
-}
-
-install_stablediffusion_webui() {
-    local pathStableDiffusionWebUI="$HOME/packgpt/stablediffusion_webui"
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-    mkdir -p $pathStableDiffusionWebUI
-    wget -q -P $pathStableDiffusionWebUI https://raw.githubusercontent.com/AUTOMATIC1111/stable-diffusion-webui/master/webui.sh
-    chmod +x $pathStableDiffusionWebUI/webui.sh
-    export COMMANDLINE_ARGS="--skip-torch-cuda-test"
-    pushd $pathStableDiffusionWebUI
-    ./webui.sh
-    popd
-}
-
-install_textgenwebui() {
-    local pathTextGenWebUI="$HOME/packgpt/textgenwebui"
-    export PYENV_ROOT="$HOME/.pyenv"
-    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-    mkdir -p $pathTextGenWebUI
-    git clone https://github.com/oobabooga/text-generation-webui.git $pathTextGenWebUI || { echo "Cloning failed"; exit 1; }
-    pushd $pathTextGenWebUI
-    python3 -m venv textgenwebui_env
-    source textgenwebui_env/bin/activate
-    pip install -r requirements.txt
-    popd
-}
-
-install_videocrafter() {
-    local pathVideocrafter="$HOME/packgpt/videocrafter"
-    if ! command -v conda &> /dev/null; then
-        execute_as_sudo apt install -y wget
-        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
-        bash ~/miniconda.sh -b -p $HOME/miniconda
-        export PATH="$HOME/miniconda/bin:$PATH"
-        conda init
-    fi
-    mkdir -p $pathVideocrafter
-    git clone https://github.com/AILab-CVC/VideoCrafter.git $pathVideocrafter || { echo "Cloning failed"; exit 1; }
-    pushd $pathVideocrafter
-    conda create -n videocrafter python=3.8.5 -y
-    conda activate videocrafter
-    pip install torch torchvision
-    pip install -r requirements.txt
-    popd
-}
-
-install_system_packages
-install_pyenv
-install_biniou
-install_pinokio
-install_buzz
-install_final2x
-install_fooocus
-install_gpt4all
-install_lmstudio
-install_localGPT
-install_ollama
-install_ollamagui
-install_chatd
-install_privategpt
-install_replay
-install_rvcgui
-install_stablediffusion_webui
-install_textgenwebui
-install_videocrafter
+#install_packgpt
+#install_pinokio
+#install_biniou
+#install_final2x
+#install_fooocus
+#install_gpt4all
+#install_lmstudio
+#install_localgpt
+#install_ollama
+#install_ollamagui
+#install_chatd
