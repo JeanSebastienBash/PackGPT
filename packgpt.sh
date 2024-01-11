@@ -129,7 +129,7 @@ install_ollamagui() {
     mkdir -p $pathOllamaGui
     pushd $pathOllamaGui
     git clone https://github.com/ollama-ui/ollama-ui .
-    execute_as_sudo make
+    execute_as_sudo make &
     popd
 }
 install_chatd() {
