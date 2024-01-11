@@ -2,7 +2,7 @@
 
 The main purpose of this script is minimalist: to simplify and speed up the automatic installation, in a single pass, of various generative artificial intelligence tools. It is intended for local use on a test server.
 
-This script is specifically designed for use with a fresh minimal installation of Debian 12. It is imperative that the minimal version of Debian 12 does contain any default system packages.
+This script is specifically designed for use with a fresh minimal installation of Debian 12. It is imperative that the minimum version of Debian 12 contains only ssh and the default system packages.
 
 The PackGPT script simplifies the installation of multiple AI tools on a single server, quickly and efficiently. Using this script, you can deploy up to 10 AI tools in less than 30 minutes, assuming a high-speed Internet connection. Once installed, the AI tools will occupy around 50 gigabytes of disk space on your server.
 
