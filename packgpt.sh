@@ -26,7 +26,7 @@ install_nvidia() {
     execute_as_sudo nvidia-detect
     execute_as_sudo apt install -y nvidia-driver
     # execute_as_sudo systemctl reboot
-    # Si probleme pendant installation nvidia, redémarrer votre serveur et éxecutez sudo dpkg --configure -a, puis relancer packgpt et install_nvidia, puis reboot du serveur.
+    # If there is an issue during NVIDIA installation, restart your server and run `sudo dpkg --configure -a`, then restart PackGPT and run `install_nvidia`, followed by a server reboot.
 }
 install_packgpt() {
     execute_as_sudo apt install -y git tree htop nvtop locate chromium libtcmalloc-minimal4
