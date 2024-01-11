@@ -17,15 +17,15 @@ Facilitate the process of installing and managing artificial intelligence tools 
 
 ## List of IA Tools installed by the script
 
-3. [Pinokio](lien_vers_la_documentation)
-4. [Biniou](lien_vers_la_documentation)
-5. [Final2x](lien_vers_la_documentation)
-6. [Fooocus](lien_vers_la_documentation)
-7. [GPT4All](lien_vers_la_documentation)
-8. [LMStudio](lien_vers_la_documentation)
-9. [LocalGPT](lien_vers_la_documentation)
-10. [Ollama](lien_vers_la_documentation)
-11. [OllamaGUI](lien_vers_la_documentation)
-12. [ChatD](lien_vers_la_documentation)
+1. [Pinokio](lien_vers_la_documentation)
+2. [Biniou](lien_vers_la_documentation)
+3. [Final2x](lien_vers_la_documentation)
+4. [Fooocus](lien_vers_la_documentation)
+5. [GPT4All](lien_vers_la_documentation)
+6. [LMStudio](lien_vers_la_documentation)
+7. [LocalGPT](lien_vers_la_documentation)
+8. [Ollama](lien_vers_la_documentation)
+9. [OllamaGUI](lien_vers_la_documentation)
+10. [ChatD](lien_vers_la_documentation)
 
 Documentation under construction, script fully functional.
