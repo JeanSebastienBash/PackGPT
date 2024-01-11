@@ -19,13 +19,13 @@ Facilitate the installation process for artificial intelligence tools and enable
 ## List of IA Tools installed by the script
 
 1. <a href="https://github.com/pinokiocomputer/pinokio" target="_blank">Pinokio</a>
-2. [Biniou](lien_vers_la_documentation)
-3. [Final2x](lien_vers_la_documentation)
-4. [Fooocus](lien_vers_la_documentation)
-5. [GPT4All](lien_vers_la_documentation)
-6. [LMStudio](lien_vers_la_documentation)
-7. [LocalGPT](lien_vers_la_documentation)
-8. [Ollama](lien_vers_la_documentation)
+2. <a href="https://github.com/Woolverine94/biniou" target="_blank">Biniou</a>
+3. [Final2x](https://github.com/Tohrusky/Final2x)
+4. [Fooocus](https://github.com/lllyasviel/Fooocus)
+5. [GPT4All](https://github.com/nomic-ai/gpt4all)
+6. [LMStudio](https://github.com/lmstudio-ai/.github)
+7. [LocalGPT](https://github.com/PromtEngineer/localGPT)
+8. [Ollama](https://github.com/jmorganca/ollama)
 9. [OllamaGUI](lien_vers_la_documentation)
 10. [ChatD](lien_vers_la_documentation)
 
