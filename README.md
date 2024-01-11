@@ -17,7 +17,7 @@ Facilitate the installation process for artificial intelligence tools and enable
 
 ## List of IA Tools installed by the script
 
-1. [Pinokio](https://github.com/pinokiocomputer/pinokio)
+1. [Pinokio](https://github.com/pinokiocomputer/pinokio){:target="_blank"}
 2. [Biniou](lien_vers_la_documentation)
 3. [Final2x](lien_vers_la_documentation)
 4. [Fooocus](lien_vers_la_documentation)
