@@ -1,9 +1,6 @@
 #!/bin/bash
 myname=$(whoami)
 mypass='myPassword1234'
-execute_as_root() {
-    echo "$rootpass" | sudo -S -i "$@"
-}
 execute_as_sudo() {
     echo "$mypass" | sudo -S "$@"
 }
