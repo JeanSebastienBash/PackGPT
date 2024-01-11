@@ -8,7 +8,7 @@ The PackGPT script simplifies the installation of multiple AI tools on a single 
 
 ## Objective
 
-Facilitate the process of installing artificial intelligence tools on a Debian server.
+Facilitate the installation process for artificial intelligence tools and enable them to coexist on the same Debian server.
 
 ## Benefits
 
