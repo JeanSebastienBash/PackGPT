@@ -28,4 +28,4 @@ Facilitate the installation process for artificial intelligence tools and enable
 9. [OllamaGUI](lien_vers_la_documentation)
 10. [ChatD](lien_vers_la_documentation)
 
-Documentation under construction, script fully functional.
+... Documentation under construction, script maintained and functional. ...
