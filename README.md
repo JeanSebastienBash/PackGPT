@@ -15,7 +15,7 @@ Facilitate the process of installing and managing artificial intelligence tools 
 - Time-saving: Quickly install multiple tools in a single run.
 - Centralization: group different AI tools on a single server.
 
-## Liste des Outils IA installés par le script
+## List of IA Tools installed by the script
 
 3. [Pinokio](lien_vers_la_documentation)
 4. [Biniou](lien_vers_la_documentation)
