@@ -10,12 +10,6 @@ With this script, you can deploy up to 10 AI tools in less than 45 minutes, assu
 
 Facilitate the installation process for artificial intelligence tools and enable them to coexist on the same Debian server.
 
-## Benefits
-
-- Simplified Setup: achieve all this with just one single script.
-- Time-saving: quickly install multiple tools in a single run.
-- Centralization: group different AI tools on a single server.
-
 ## List of IA Tools installed by the script, sorted alphabetically
 
 1. [Biniou](https://github.com/Woolverine94/biniou)
