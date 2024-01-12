@@ -113,6 +113,18 @@ install_localgpt() {
     pip install --use-pep517 auto-gptq==0.2.2
     popd
 }
+install_chatd() {
+    # START : shell-1 : cd chatd/chatd-linux-x64 ; ./chatd
+    local pathChatd="$HOME/PackGPT/chatd"
+    local chatdZipURL="https://github.com/BruceMacD/chatd/releases/download/v1.0.1/chatd-linux-x64.zip"
+    mkdir -p $pathChatd
+    execute_as_sudo apt install -y unzip
+    wget -P $pathChatd $chatdZipURL
+    pushd $pathChatd
+    unzip $(basename $chatdZipURL)
+    chmod +x chatd-linux-x64/chatd
+    popd
+}
 install_ollama() {
     # START : shell-1 : ollama
     local pathOllama="$HOME/PackGPT/ollama"
@@ -132,18 +144,6 @@ install_ollamagui() {
     execute_as_sudo make &
     popd
 }
-install_chatd() {
-    # START : shell-1 : cd chatd/chatd-linux-x64 ; ./chatd
-    local pathChatd="$HOME/PackGPT/chatd"
-    local chatdZipURL="https://github.com/BruceMacD/chatd/releases/download/v1.0.1/chatd-linux-x64.zip"
-    mkdir -p $pathChatd
-    execute_as_sudo apt install -y unzip
-    wget -P $pathChatd $chatdZipURL
-    pushd $pathChatd
-    unzip $(basename $chatdZipURL)
-    chmod +x chatd-linux-x64/chatd
-    popd
-}
 
 system_update
 system_upgrade
@@ -158,6 +158,6 @@ system_upgrade
 #install_gpt4all
 #install_lmstudio
 #install_localgpt
+#install_chatd
 #install_ollama
 #install_ollamagui
-#install_chatd
