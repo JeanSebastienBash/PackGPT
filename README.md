@@ -1,4 +1,4 @@
-# PackGPT - Generative AI Tools Installation Script for Debian Servers
+# PackGPT - Generative AI Tools Installation Script for Debian12 Servers
 
 The main purpose of this script is minimalist: to simplify and speed up the automatic installation of various generative artificial intelligence tools. It is intended for local use on a test server.
 
