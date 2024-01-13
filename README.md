@@ -6,6 +6,10 @@ This script is specifically designed for use with a fresh minimal installation o
 
 With this script, you can deploy up to 10 AI tools in less than 45 minutes, assuming you have a high-speed Internet connection and ssd. Once installed, the AI tools will occupy around 50 gigabytes of disk space on your server.
 
+<p align="center">
+  <img src="packgpt.png" alt="packgpt logo"/>
+</p>
+
 ## List of IA Tools installed by the script, sorted alphabetically
 
 1. [Biniou](https://github.com/Woolverine94/biniou)
