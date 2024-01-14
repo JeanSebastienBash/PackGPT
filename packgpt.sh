@@ -28,6 +28,19 @@ install_nvidia() {
     # execute_as_sudo systemctl reboot
     # If there is an issue during NVIDIA installation, restart your server and run `sudo dpkg --configure -a`, then restart PackGPT and run `install_nvidia`, followed by a server reboot.
 }
+install_cuda() {
+    execute_as_sudo apt update -y
+    execute_as_sudo apt upgrade -y
+    execute_as_sudo apt install -y software-properties-common
+    execute_as_sudo add-apt-repository contrib
+    # https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Debian&target_version=12&target_type=deb_local
+    wget https://developer.download.nvidia.com/compute/cuda/12.3.2/local_installers/cuda-repo-debian12-12-3-local_12.3.2-545.23.08-1_amd64.deb
+    execute_as_sudo dpkg -i cuda-repo-debian12-12-3-local_12.3.2-545.23.08-1_amd64.deb
+    execute_as_sudo cp /var/cuda-repo-debian12-12-3-local/cuda-*-keyring.gpg /usr/share/keyrings/
+    execute_as_sudo add-apt-repository contrib
+    execute_as_sudo apt update -y
+    execute_as_sudo apt-get -y install cuda-toolkit-12-3 
+}
 install_packgpt() {
     execute_as_sudo apt install -y git tree htop nvtop locate chromium libtcmalloc-minimal4
     cd /home/$myname/ || exit
@@ -149,6 +162,7 @@ system_update
 system_upgrade
 
 #install_nvidia
+#install_cuda
 
 #install_packgpt
 #install_pinokio
