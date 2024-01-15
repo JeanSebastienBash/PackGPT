@@ -22,5 +22,3 @@ With this script, you can deploy up to 10 AI tools in less than 45 minutes, assu
 8. [Ollama](https://github.com/jmorganca/ollama)
 9. [Ollama UI](https://github.com/ollama-ui/ollama-ui)
 10. <a href="https://github.com/pinokiocomputer/pinokio" target="_blank">Pinokio</a>
-
-... Documentation under construction, script maintained and functional. ...
