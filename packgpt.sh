@@ -77,7 +77,7 @@ install_final2x() {
     execute_as_sudo dpkg -i $pathFinal2x/$(basename $final2xDebURL)
 }
 install_fooocus() {
-    # START : shell-1 : cd foocus ; source fooocus_env/bin/activate ; python entry_with_update.py
+    # START : shell-1 : cd fooocus ; source fooocus_env/bin/activate ; python entry_with_update.py
     # START : shell-2 : chromium http://127.0.0.1:7865/
     local pathFooocus="$HOME/PackGPT/fooocus"
     mkdir -p $pathFooocus
